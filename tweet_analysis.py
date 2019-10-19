@@ -5,6 +5,7 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import twitter_credentials
+from twitter_handles import usernames, number_of_tweets
 
 # Data manipulation, analysis and visualization
 import json
@@ -309,19 +310,15 @@ if __name__ == '__main__':
 
     # twitter_streamer = TwitterStreamer()
     # twitter_streamer.stream_tweets(fetched_tweets_filename, hash_tag_list)
-
-    # usernames = ['thomasjv93', 'BalgaFCB', 'kishorebarker', 'realDonaldTrump', 'EiFSoccer', 'R3greting',
-    # 'Lewag0atski', 'bayernismus', 'TonyFergusonXT']
-    usernames = ['viraj_sg', 'toyintx', 'fervieg', 'ArdoozBayern', 'BRAZZORZ', 'javisjames11', 'Oncheedo', 'escarlettes_',
-    'Slimesteiger', 'straightredblog', 'BundeSabeh', 'mike_rl9', 'lukas_lukassi', 'SterndesSudenss', 'lehm_FCB', 'MarkodoniaFT',
-    'leighFCB', 'naouresTN', 'Red_Roscoe', 'DeadlyComan', 'BavarianTweets', 'bayernxashlee', 'NeuerBoateng', 'neongoretzka']
-    number_of_tweets = 100
+    
     results_path = "./results"
 
     twitter_client = TwitterClient()
     tweet_analyzer = TweetAnalyzer()
     api = twitter_client.get_twitter_client_api()
     
+    # 'usernames' is a list of Twitter usernames (handles) obtained from another file (check the imports)
+    # 'number_of_tweets' is an integer representing the number of tweets to extract via the API
     for username in usernames:
         tweets = api.user_timeline(screen_name=username, count=number_of_tweets)
         
