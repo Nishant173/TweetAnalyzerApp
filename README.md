@@ -18,4 +18,4 @@ Do `pip install -r requirements.txt`
 - re==2.2.1
 - textblob==0.15.1
 - wordcloud==1.5.0
-- nltk==3.2.5
+- nltk==3.4.5
