@@ -6,7 +6,8 @@
 
 ## Usage
 - Add credentials into the `twitter_credentials.py` file.
-- Run `main.py` after updating the `usernames` list on line #313, as per your preference.
+- Run `main.py` after updating the `usernames` list found in the import on line #8.
+- Run `sentiment_comparison.py` after updating the `usernames` list found in the import on line #3.
 
 ## Dependencies
 Do `pip install -r requirements.txt`
