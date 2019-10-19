@@ -4,3 +4,5 @@ twitter_handles.py
 *.ipynb
 images
 results
+notebooks
+.ipynb_checkpoints
