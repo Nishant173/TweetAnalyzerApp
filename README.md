@@ -2,11 +2,14 @@
 - Uses [Twitter API](https://developer.twitter.com) to extract tweets from user-handles.
 - Tweets are then analyzed.
 - Insights such as sentiment of tweets, mention frequencies, wordclouds and more are extracted.
-- Three CSV files and three PNG files are created and stored in the `results` folder.
+- On running `tweet_analysis.py`, Three CSV files and three PNG files are created (per username) and stored in the `results` folder.
+- Insights such as comparisons of likes, retwets, and sentiment of tweets are extracted.
+- On running `sentiment_comparison.py`, one CSV file and two PNG files are created and stored in the `insights_compared` folder.
 
 ## Usage
 - Add credentials into the `twitter_credentials.py` file.
-- Run `main.py` after updating the `usernames` list found in the import on line #8.
+- Create two folder names `results` and `insights_compared` to store insights from `tweet_analysis.py` and `sentiment_comparison.py` respectively.
+- Run `tweet_analysis.py` after updating the `usernames` list found in the import on line #8.
 - Run `sentiment_comparison.py` after updating the `usernames` list found in the import on line #3.
 
 ## Dependencies
