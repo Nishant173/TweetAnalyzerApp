@@ -12,29 +12,32 @@ def get_users_tweets(usernames, number_of_tweets):
     
     df_tweet_info = pd.DataFrame()
     for username in usernames:
-        tweets = api.user_timeline(screen_name=username, count=number_of_tweets)
+        try:
+            tweets = api.user_timeline(screen_name=username, count=number_of_tweets)
 
-        df = tweet_analyzer.tweets_to_data_frame(tweets)
-        df_tweets_original = df[df['tweets'].apply(tweet_analyzer.drop_retweets)]
+            df = tweet_analyzer.tweets_to_data_frame(tweets)
+            df_tweets_original = df[df['tweets'].apply(tweet_analyzer.drop_retweets)]
 
-        sentences = list(df_tweets_original['tweets'])
-        corpus = '. '.join(sentences)
-        avg_polarity = tweet_analyzer.analyze_polarity(corpus)
-        avg_subjectivity = tweet_analyzer.analyze_subjectivity(corpus)
-        avg_post_length = round(df_tweets_original['len'].mean(), 2)
-        likes_per_post = round(df_tweets_original['likes'].mean(), 2)
-        rts_per_post = round(df_tweets_original['retweets'].mean(), 2)
-        df_temp = pd.DataFrame({
-            'username': username,
-            'tweet_corpus': corpus,
-            'avg_post_length': avg_post_length,
-            'likes_per_post': likes_per_post,
-            'rts_per_post': rts_per_post,
-            'avg_polarity': avg_polarity,
-            'avg_subjectivity': avg_subjectivity
-        }, index=[0])
-        df_tweet_info = pd.concat([df_tweet_info, df_temp], ignore_index=True, sort=False)
-        print("Extracted tweets for user: @{}".format(username))
+            sentences = list(df_tweets_original['tweets'])
+            corpus = '. '.join(sentences)
+            avg_polarity = tweet_analyzer.analyze_polarity(corpus)
+            avg_subjectivity = tweet_analyzer.analyze_subjectivity(corpus)
+            avg_post_length = round(df_tweets_original['len'].mean(), 2)
+            likes_per_post = round(df_tweets_original['likes'].mean(), 2)
+            rts_per_post = round(df_tweets_original['retweets'].mean(), 2)
+            df_temp = pd.DataFrame({
+                'username': username,
+                'tweet_corpus': corpus,
+                'avg_post_length': avg_post_length,
+                'likes_per_post': likes_per_post,
+                'rts_per_post': rts_per_post,
+                'avg_polarity': avg_polarity,
+                'avg_subjectivity': avg_subjectivity
+            }, index=[0])
+            df_tweet_info = pd.concat([df_tweet_info, df_temp], ignore_index=True, sort=False)
+            print("Extracted tweets for user: @{}".format(username))
+        except Exception as e:
+            print("ERROR ({}) - Either username is wrong OR page not found - Handle: @{}".format(e, username))
     return df_tweet_info
 
 
