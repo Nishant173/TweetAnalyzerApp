@@ -8,7 +8,7 @@
 
 ## Usage
 - Add credentials into the `twitter_credentials.py` file.
-- Create two folder names `results` and `insights_compared` to store insights from `tweet_analysis.py` and `sentiment_comparison.py` respectively.
+- Create two folders named `results` and `insights_compared` to store insights from `tweet_analysis.py` and `sentiment_comparison.py` respectively.
 - Run `tweet_analysis.py` after updating the `usernames` list found in the import on line #8.
 - Run `sentiment_comparison.py` after updating the `usernames` list found in the import on line #3.
 
