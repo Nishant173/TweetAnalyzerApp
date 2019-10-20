@@ -34,11 +34,11 @@ def get_users_tweets(usernames, number_of_tweets):
             'avg_subjectivity': avg_subjectivity
         }, index=[0])
         df_tweet_info = pd.concat([df_tweet_info, df_temp], ignore_index=True, sort=False)
+        print("Extracted tweets for user: @{}".format(username))
     return df_tweet_info
 
 
-def plot_likes_rts(df):
-    color = 'green'
+def plot_likes_rts(df, color='green', tight_layout=False):
     plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
     plt.figure(figsize=(25, 14))
     plt.scatter(x=df['likes_per_post'], y=df['rts_per_post'], s=180, color=color)
@@ -51,13 +51,13 @@ def plot_likes_rts(df):
     plt.ylim(0, np.ceil(df['rts_per_post'].max()) + 1)
     for user, fav, rt in zip(df['username'], df['likes_per_post'], df['rts_per_post']):
         plt.text(x=fav, y=rt, s=str(user), fontsize=25, color=color)
-    plt.tight_layout()
+    if(tight_layout == True):
+        plt.tight_layout()
     plt.grid()
     plt.savefig("{}/Likes and Retweets.png".format(results_path))
 
 
-def plot_sentiment(df):    
-    color = 'red'
+def plot_sentiment(df, color='blue', tight_layout=False):
     plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
     plt.figure(figsize=(25, 14))
     plt.scatter(x=df['avg_subjectivity'], y=df['avg_polarity'], s=180, color=color)
@@ -70,7 +70,8 @@ def plot_sentiment(df):
     plt.ylim(-1, 1)
     for user, sub, pol in zip(df['username'], df['avg_subjectivity'], df['avg_polarity']):
         plt.text(x=sub, y=pol, s=str(user), fontsize=25, color=color)
-    plt.tight_layout()
+    if(tight_layout == True):
+        plt.tight_layout()
     plt.grid()
     plt.savefig("{}/Sentiment scores.png".format(results_path))
 
@@ -88,6 +89,6 @@ if __name__ == '__main__':
     df_info.sort_values(by=ranking_metric, ascending=lower_the_better, inplace=True)
     df_info.reset_index(drop=True, inplace=True)
     df_info.to_csv("{}/Tweet comparisons.csv".format(results_path), index=False)
-    plot_likes_rts(df_info)
-    plot_sentiment(df_info)
+    plot_likes_rts(df=df_info, color='purple')
+    plot_sentiment(df=df_info, color='green')
     print("Done.")
