@@ -79,6 +79,26 @@ def plot_sentiment(df, color='blue', tight_layout=False):
     plt.savefig("{}/Sentiment scores.png".format(results_path))
 
 
+def plot_tweet_length(df, color='#1DC34E', tight_layout=False):
+    df.sort_values(by='avg_post_length', ascending=True, inplace=True)
+
+    plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
+    plt.figure(figsize=(25, 14))
+    plt.barh(y=df['username'], width=df['avg_post_length'], color=color)
+    plt.title("Tweet length", fontsize=40)
+    plt.xlabel("Average tweet length", fontsize=30)
+    plt.ylabel("Usernames", fontsize=30)
+    plt.xticks(fontsize=20)
+    plt.yticks(fontsize=20)
+    plt.xlim(0, np.ceil(df['avg_post_length'].max()) + 10)
+    for user, length in zip(df['username'], df['avg_post_length']):
+        plt.text(x=length + 0.2, y=user, s=str(length), fontsize=25, color=color)
+    if(tight_layout == True):
+        plt.tight_layout()
+    plt.grid()
+    plt.savefig("{}/Tweet length.png".format(results_path))
+
+
 
 if __name__ == '__main__':
     twitter_client = tweet_analysis.TwitterClient()
@@ -92,6 +112,7 @@ if __name__ == '__main__':
     df_info.sort_values(by=ranking_metric, ascending=lower_the_better, inplace=True)
     df_info.reset_index(drop=True, inplace=True)
     df_info.to_csv("{}/Tweet comparisons.csv".format(results_path), index=False)
-    plot_likes_rts(df=df_info, color='purple')
-    plot_sentiment(df=df_info, color='green')
+    plot_likes_rts(df=df_info, color='purple', tight_layout=False)
+    plot_sentiment(df=df_info, color='green', tight_layout=False)
+    plot_tweet_length(df=df_info, color='#1DC34E', tight_layout=False)
     print("Done.")
