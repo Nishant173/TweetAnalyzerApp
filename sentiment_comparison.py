@@ -9,7 +9,12 @@ import matplotlib.pyplot as plt
 
 
 def get_users_tweets(usernames, number_of_tweets):
-    
+    """
+    Takes in list of 'usernames' and integer of 'number_of_tweets'.
+    Returns Pandas DataFrame containing tweet details for those users.
+    Details include columns labelled:
+    ['username', 'tweet_corpus', 'avg_post_length', 'likes_per_post', 'rts_per_post', 'avg_polarity', 'avg_subjectivity']
+    """
     df_tweet_info = pd.DataFrame()
     for username in usernames:
         try:
@@ -42,10 +47,13 @@ def get_users_tweets(usernames, number_of_tweets):
 
 
 def plot_likes_rts(df, color='green', tight_layout=False):
+    """
+    Creates scatter plot for Likes-Retweets comparisons between various users.
+    """
     plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
     plt.figure(figsize=(25, 14))
     plt.scatter(x=df['likes_per_post'], y=df['rts_per_post'], s=180, color=color)
-    plt.title("Twitter - Likes and Retweets", fontsize=40)
+    plt.title("Twitter - Likes and Retweets (Last {} tweets)".format(number_of_tweets), fontsize=40)
     plt.xlabel("Likes per post", fontsize=30)
     plt.ylabel("RTs per post", fontsize=30)
     plt.xticks(fontsize=20)
@@ -57,14 +65,17 @@ def plot_likes_rts(df, color='green', tight_layout=False):
     if(tight_layout == True):
         plt.tight_layout()
     plt.grid()
-    plt.savefig("{}/Likes and Retweets.png".format(results_path))
+    plt.savefig("{}/Likes and Retweets (Last {} tweets).png".format(results_path, number_of_tweets))
 
 
 def plot_sentiment(df, color='blue', tight_layout=False):
+    """
+    Creates scatter plot for sentiment comparisons (polarity and subjectivity) between various users.
+    """
     plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
     plt.figure(figsize=(25, 14))
     plt.scatter(x=df['avg_subjectivity'], y=df['avg_polarity'], s=180, color=color)
-    plt.title("Tweet sentiment", fontsize=40)
+    plt.title("Tweet sentiment (Last {} tweets)".format(number_of_tweets), fontsize=40)
     plt.xlabel("Average subjectivity", fontsize=30)
     plt.ylabel("Average polarity", fontsize=30)
     plt.xticks(np.arange(0, 1+0.25, 0.25), fontsize=20)
@@ -76,17 +87,20 @@ def plot_sentiment(df, color='blue', tight_layout=False):
     if(tight_layout == True):
         plt.tight_layout()
     plt.grid()
-    plt.savefig("{}/Sentiment scores.png".format(results_path))
+    plt.savefig("{}/Sentiment scores (Last {} tweets).png".format(results_path, number_of_tweets))
 
 
 def plot_tweet_length(df, color='#1DC34E', tight_layout=False):
+    """
+    Creates horizontal bar chart for average character count per post, between various users.
+    """
     df.sort_values(by='avg_post_length', ascending=True, inplace=True)
 
     plt.style.use('classic') # ['classic', fivethirtyeight', 'seaborn-dark', 'seaborn-ticks', 'ggplot']
     plt.figure(figsize=(25, 14))
     plt.barh(y=df['username'], width=df['avg_post_length'], color=color)
-    plt.title("Tweet length", fontsize=40)
-    plt.xlabel("Average tweet length", fontsize=30)
+    plt.title("Tweet length (Last {} tweets)".format(number_of_tweets), fontsize=40)
+    plt.xlabel("Average tweet length (characters)", fontsize=30)
     plt.ylabel("Usernames", fontsize=30)
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
@@ -96,7 +110,7 @@ def plot_tweet_length(df, color='#1DC34E', tight_layout=False):
     if(tight_layout == True):
         plt.tight_layout()
     plt.grid()
-    plt.savefig("{}/Tweet length.png".format(results_path))
+    plt.savefig("{}/Tweet length (Last {} tweets).png".format(results_path, number_of_tweets))
 
 
 
