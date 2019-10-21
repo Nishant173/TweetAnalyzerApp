@@ -43,6 +43,11 @@ def get_users_tweets(usernames, number_of_tweets):
             print("Extracted tweets for user: @{}".format(username))
         except Exception as e:
             print("ERROR ({}) - Either username is wrong OR page not found - Handle: @{}".format(e, username))
+    
+    ranking_metric = ['likes_per_post', 'rts_per_post', 'avg_polarity', 'avg_subjectivity', 'avg_post_length']
+    lower_the_better = [False, False, False, True, True]
+    df_tweet_info.sort_values(by=ranking_metric, ascending=lower_the_better, inplace=True)
+    df_tweet_info.reset_index(drop=True, inplace=True)
     return df_tweet_info
 
 
@@ -120,11 +125,7 @@ if __name__ == '__main__':
     api = twitter_client.get_twitter_client_api()
 
     results_path = "./insights_compared"
-    ranking_metric = ['likes_per_post', 'rts_per_post', 'avg_polarity', 'avg_subjectivity', 'avg_post_length']
-    lower_the_better = [False, False, False, True, True]
     df_info = get_users_tweets(usernames, number_of_tweets)
-    df_info.sort_values(by=ranking_metric, ascending=lower_the_better, inplace=True)
-    df_info.reset_index(drop=True, inplace=True)
     df_info.to_csv("{}/Tweet comparisons.csv".format(results_path), index=False)
     plot_likes_rts(df=df_info, color='purple', tight_layout=False)
     plot_sentiment(df=df_info, color='green', tight_layout=False)
