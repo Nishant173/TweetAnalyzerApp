@@ -54,7 +54,7 @@ def get_users_tweets(usernames, number_of_tweets):
     return df_tweet_info
 
 
-def plot_likes_rts(df, color='green', tight_layout=False):
+def plot_likes_rts(df, color='purple', tight_layout=False):
     """
     Creates scatter plot for Likes-Retweets comparisons between various users.
     """
@@ -76,7 +76,7 @@ def plot_likes_rts(df, color='green', tight_layout=False):
     plt.savefig("{}/Likes and Retweets (Last {} tweets).png".format(results_path, number_of_tweets))
 
 
-def plot_sentiment(df, color='blue', tight_layout=False):
+def plot_sentiment(df, color='green', tight_layout=False):
     """
     Creates scatter plot for sentiment comparisons (polarity and subjectivity) between various users.
     """
