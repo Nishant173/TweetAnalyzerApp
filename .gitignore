@@ -1,5 +1,4 @@
-twitter_credentials.py
-twitter_handles.py
+env
 *__pycache__
 *.ipynb
 images
